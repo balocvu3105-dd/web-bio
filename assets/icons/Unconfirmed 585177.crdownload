@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CataWuwa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --a: #00e5ff;
+            --g: #ffd54f;
+            --cb: rgba(3,18,38,0.68);
+            --bg: rgba(0,229,255,0.32);
+            --trans-dur: 1s;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Raleway', sans-serif;
+            color: #e8f4f8;
+            overflow-x: hidden;
+            background: #030d1a;
+        }
+        
+        body, .btn, .av-r1, .av-r2, .av-img, .tag, .div, .sw-btn, .sn, .bl {
+            transition:
+                background 1s ease,
+                border-color 1s ease,
+                box-shadow 1s ease,
+                color 1s ease,
+                text-shadow 1s ease,
+                filter 1s ease;
+        }
+
+        /* ── VIDEO BACKGROUND ── */
+        #yt-wrap {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            background: #000;
+            pointer-events: none;
+        }
+
+        #yt-wrap iframe {
+            position: absolute;
+            width: 100vw;
+            height: 56.25vw;
+            min-height: 100vh;
+            min-width: 177.78vh;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.1);
+            border: none;
+            pointer-events: none;
+        }
+
+        /* ── CINEMATIC TRANSITION ── */
+        #trans-overlay { display: none; }
+
+        /* ── VIGNETTE GRADIENT ── */
+        #vg {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                linear-gradient(to bottom, rgba(3,13,26,.6) 0%, rgba(3,13,26,.2) 50%, rgba(3,13,26,.7) 100%),
+                radial-gradient(ellipse at center, transparent 30%, rgba(3,13,26,.5) 100%);
+            transition: background var(--trans-dur) ease;
+        }
+
+        /* ── PARTICLES CANVAS ── */
+        #particles {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* ── PAGE CONTENT ── */
+        .page {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 56px 20px 76px;
+        }
+
+        /* ── AVATAR ── */
+        .av-wrap {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100% { transform: translateY(0) }
+            50% { transform: translateY(-10px) }
+        }
+
+        .av-r1 {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, var(--a), var(--g), var(--a)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            animation: spin 6s linear infinite;
+            transition: background var(--trans-dur) ease;
+        }
+
+        .av-r2 {
+            position: absolute;
+            inset: -14px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,229,255,.2);
+            animation: spin 10s linear infinite reverse;
+            transition: border-color var(--trans-dur) ease;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg) } }
+
+        .av-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            box-shadow: 0 0 28px rgba(0,229,255,.3);
+            transition: box-shadow var(--trans-dur) ease;
+        }
+
+        /* ── NAME ── */
+        .name {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(22px, 5vw, 34px);
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--g) 0%, #fff 40%, var(--g) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+            text-align: center;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 6px rgba(255,213,79,.5)) drop-shadow(0 0 2px rgba(255,255,255,.3)) }
+            to   { filter: drop-shadow(0 0 20px rgba(255,213,79,.95)) drop-shadow(0 0 8px rgba(255,255,255,.6)) }
+        }
+
+        .tag {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.82);
+            text-shadow: 0 0 18px var(--a), 0 0 6px var(--a);
+            margin-bottom: 34px;
+            font-weight: 500;
+            text-align: center;
+            transition: color var(--trans-dur) ease, text-shadow var(--trans-dur) ease;
+        }
+
+        .div {
+            width: 180px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--a), transparent);
+            margin: 0 auto 28px;
+            opacity: .4;
+            transition: background var(--trans-dur) ease;
+        }
+
+        /* ── LINKS ── */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 13px;
+            padding: 12px 19px;
+            background: var(--cb);
+            border: 1px solid var(--bg);
+            border-radius: 12px;
+            text-decoration: none;
+            color: #e8f4f8;
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform .2s, border-color .25s, box-shadow .3s, border var(--trans-dur) ease;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.07), transparent);
+            transition: left .5s;
+            pointer-events: none;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0%; height: 2px;
+            background: linear-gradient(90deg, var(--a), var(--g));
+            transition: width .4s;
+            pointer-events: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.01);
+            border-color: var(--a);
+            box-shadow: 0 8px 30px rgba(0,229,255,.2);
+        }
+        .btn:hover::before { left: 150% }
+        .btn:hover::after  { width: 100% }
+        .btn:active { transform: scale(.98); transition-duration: .05s }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(0,229,255,.18);
+            transform: scale(0);
+            animation: rip .6s linear;
+            pointer-events: none;
+        }
+        @keyframes rip { to { transform: scale(4); opacity: 0 } }
+
+        .bi {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            transition: transform .3s;
+            background: rgba(255,255,255,0.06);
+        }
+        .bi img { width: 28px; height: 28px; object-fit: contain; display: block }
+        .btn:hover .bi { transform: scale(1.15) rotate(-5deg) }
+
+        .bt {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .bl { display: block; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(0,229,255,.48); margin-bottom: 2px; transition: color var(--trans-dur) ease }
+        .bn { display: block; font-size: 13px; font-weight: 600 }
+        .ba { font-size: 14px; opacity: 0; transform: translateX(-5px); transition: all .3s; color: var(--a) }
+        .btn:hover .ba { opacity: 1; transform: translateX(0) }
+
+        /* ── SWITCHER ── */
+        .sw {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+        }
+
+        .sw-lbl {
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.3);
+            margin-bottom: 2px;
+        }
+
+        .sw-btn {
+            width: 58px;
+            background: rgba(0,0,0,.6);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 10px;
+            padding: 5px 3px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            transition: all .25s;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+        }
+        .sw-btn:hover { border-color: rgba(0,229,255,.5); transform: scale(1.05) }
+        .sw-btn.on    { border-color: var(--a); box-shadow: 0 0 10px rgba(0,229,255,.4) }
+
+        /* Element icon — SVG inline */
+        .sw-btn .el-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sw-btn .sn {
+            font-size: 7px;
+            letter-spacing: .3px;
+            color: rgba(255,255,255,.45);
+            text-align: center;
+            white-space: nowrap;
+        }
+        .sw-btn.on .sn { color: var(--a) }
+
+        /* Shimmer trong sw-btn khi on */
+        .sw-btn.on::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,.06) 50%, transparent 60%);
+            animation: swShimmer 2s ease-in-out infinite;
+        }
+        @keyframes swShimmer {
+            0%   { transform: translateX(-100%) }
+            100% { transform: translateX(200%) }
+        }
+
+        /* ── LOADING ── */
+        #loading {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: #030d1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .8s ease;
+        }
+        #loading.hidden { opacity: 0; pointer-events: none }
+
+        .lt {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            letter-spacing: 4px;
+            color: rgba(0,229,255,.6);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100% { opacity: .3 } 50% { opacity: 1 } }
+
+        /* ── ENTRANCE ANIMATIONS ── */
+        .fu { opacity: 0; transform: translateY(18px); animation: fu .7s ease forwards }
+        @keyframes fu { to { opacity: 1; transform: translateY(0) } }
+        .d1 { animation-delay: .1s }
+        .d2 { animation-delay: .25s }
+        .d3 { animation-delay: .4s }
+        .d4 { animation-delay: .5s }
+        .d5 { animation-delay: .6s }
+        .d6 { animation-delay: .7s }
+
+        
+        #radial-transition,
+        #particles,
+        .btn,
+        .sw-btn,
+        .page,
+        #yt-wrap iframe {
+            will-change: transform, opacity, filter;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+/* ── RADIAL CANVAS TRANSITION ── */
+        #radial-transition {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        @keyframes shockwave {
+            0%   { transform: scale(1);    opacity: 1; }
+            100% { transform: scale(3);    opacity: 0; }
+        }
+            100% { transform: scale(3);    opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loading"><span class="lt">WUTHERING WAVES</span></div>
+<div id="yt-wrap"></div>
+<div id="vg"></div>
+<div id="trans-overlay"></div>
+
+
+<canvas id="particles"></canvas>
+<canvas id="radial-transition"></canvas>
+
+<!-- SWITCHER -->
+<div class="sw">
+    <div class="sw-lbl">Theme</div>
+
+    <!-- Cartethyia – Aero (cyan wind swirl) -->
+    <div class="sw-btn on" onclick="setTheme(0,this)" id="s0">
+        <div class="el-icon"><img src="data:image/avif;base64,AAAAGGZ0eXBhdmlmAAAAAG1pZjFtaWFmAAABaG1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAHBpY3QAAAAAAAAAAAAAAAAAAAAADnBpdG0AAAAAAAEAAAAsaWxvYwAAAABEAAACAAIAAAABAAABiAAAAb0AAQAAAAEAAANFAAABiQAAADhpaW5mAAAAAAACAAAAFWluZmUCAAAAAAEAAGF2MDEAAAAAFWluZmUCAAAAAAIAAGF2MDEAAAAAGmlyZWYAAAAAAAAADmF1eGwAAgABAAEAAACvaXBycAAAAIppcGNvAAAAFGlzcGUAAAAAAAAAQAAAAEAAAAAMYXYxQ4E/QAAAAAAQcGl4aQAAAAADCgoKAAAADGF2MUOBH1wAAAAADnBpeGkAAAAAAQoAAAA4YXV4QwAAAAB1cm46bXBlZzptcGVnQjpjaWNwOnN5c3RlbXM6YXV4aWxpYXJ5OmFscGhhAAAAAB1pcG1hAAAAAAAAAAIAAQMBggMAAgQBhAYFAAADTm1kYXQSAAoGH9V//L1AMrADZWox/UB+oCEgAAAAAAABxwQRAPYKJdNKXtydcuEwKydGFaGtF5J8lf6vjEOPdrGTMSlyzPyBf40ls9UAMSApYG7lqrf7VF8gTkj84zEyakgz4UK/HU3bLt6CpNHs/1UyjCnYEeFtkDaXDmfzWB+qST+UiHyr0OpW0dJlKz/bsuSGzbhN/Dq0cSg5diMaJQ69IC87P9XAzxs+0eBR8edflv4S366MMB3yZYn6fk9cYKkxJ5n6mwmuKMATSQesgk4pOyEomoCV/rqaXHsagkoMeMSAUc9wRNMnZMehPt6Vd7vTkXCjbQdzt6YhQpi8+JsQtwz5bGodX3rarc8BdF12F3BjF9NificzrnAtUB8gDluqgE1mVRslI+8TIqHP18yNwycbEMkyRUZezEe2OkaUgFQUtTlrpEzii3Wn9gyENbtBiB25P25GOV/7WLPetCjj3oLGKeiIX5n9uAio97DV5e01XI26xzyxn4N2GjJKlOhqFIXtTyVoNlYL41Rx/Taz93oe7FoHlSqeTB4bKnQNiV/Wiz66dtHbt8wRLZvJMx3g1PposcWWh7kIfjHpZJIQEgAKCT/Vf/y8BDQbQDL5AmVeN0crGf7+4D+AEAAILAQoAAAAADjjjgggioDiLnyX//tfhAXt3V15Qfj2UBc08gnqCdtVWXa9Mt6ZVNGJ6G2aO8RZb9HD17uiCkM1I9yYhDmLbZXzlSxo3bSd+q/hJOW4vu9y0qIHZP4+/HnH6BIWS2OUb9SNko8/nIRWTKDJfB2pYga8oaEhknItxpc65UeA5UYSyhg99HhnxCVa0c4vJ14iDXnb9pzBohEACTftQOKGerRpodC80KKUVqzqPCwZIBcjqAqq+Xv8ALiSPgqHERMcZ6ywx8D5iQ0rEzfT71jeyT9tf2Np08X4xE29nijijcXO+6kemKCcOpeONEvFkLdNKHToF+rYnDyt84Pru1rUUrY7WPrccD+8Kw1A6wQFvdj0SE9BgMj7YU/LZZt0PJxUIirbGEdT/MUloAWBkYDh7td9WhHSVsoa6nJIJp74GHHIJzZzDs/FpWcm4P7R/EOi7tAIngn0wkmGhgpl0P4TZc1U7lX2" alt="Aero" width="28" height="28" style="object-fit:contain"></div>
+        <span class="sn">Cartethyia</span>
+    </div>
+
+    <!-- Aemeath – Fusion (orange flame) -->
+    <div class="sw-btn" onclick="setTheme(1,this)" id="s1">
+        <div class="el-icon"><img src="data:image/avif;base64,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" alt="Fusion" width="28" height="28" style="object-fit:contain"></div>
+        <span class="sn">Aemeath</span>
+    </div>
+
+    <!-- Hiyuki – Glacio (ice blue snowflake) -->
+    <div class="sw-btn" onclick="setTheme(2,this)" id="s2">
+        <div class="el-icon"><img src="data:image/avif;base64,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" alt="Glacio" width="28" height="28" style="object-fit:contain"></div>
+        <span class="sn">Hiyuki</span>
+    </div>
+
+    <!-- Phrolova – Havoc (purple chaos burst) -->
+    <div class="sw-btn" onclick="setTheme(3,this)" id="s3">
+        <div class="el-icon"><img src="data:image/avif;base64,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" alt="Havoc" width="28" height="28" style="object-fit:contain"></div>
+        <span class="sn">Phrolova</span>
+    </div>
+</div>
+
+<!-- MAIN -->
+<main class="page">
+    <div class="av-wrap fu d1">
+        <div class="av-r2"></div>
+        <div class="av-r1"></div>
+        <img class="av-img"
+             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvI4OZg5BatxgnIEtoRCHO_QhcX9X5k0RF0w&s"
+             alt="CataWuwa">
+    </div>
+    <h1 class="name fu d2">CataWuwa</h1>
+    <p class="tag fu d2">Wuthering Waves · Content Creator 🎮</p>
+    <div class="div fu d3"></div>
+
+    <div class="links">
+
+        <!-- LDShop -->
+        <a href="https://chain.ldshop.gg/T4Vmvxwnk/wuthering-waves-gp?aff_short=CataWuwa" class="btn fu d3" target="_blank" rel="noopener">
+            <div class="bi">
+                <img src="https://play-lh.googleusercontent.com/-d4LDSzQZjJ9CKiu4_rM67u9BUmR1WTRqi4bk_u5idXowYCFrEhUjRqGG8CS-Gy-ybg=w256" alt="LDShop" onerror="this.parentElement.innerHTML='💎'">
+            </div>
+            <div class="bt"><span class="bl">Nạp Game</span><span class="bn">Shop Nạp LDShop</span></div>
+            <span class="ba">→</span>
+        </a>
+
+        <!-- YouTube -->
+        <a href="https://www.youtube.com/@Catawuwa" class="btn fu d4" target="_blank" rel="noopener">
+            <div class="bi">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="28" height="28" rx="6" fill="#FF0000"/>
+                    <path d="M22.5 10.2C22.3 9.4 21.7 8.8 20.9 8.6C19.5 8.2 14 8.2 14 8.2C14 8.2 8.5 8.2 7.1 8.6C6.3 8.8 5.7 9.4 5.5 10.2C5.1 11.6 5.1 14.5 5.1 14.5C5.1 14.5 5.1 17.4 5.5 18.8C5.7 19.6 6.3 20.2 7.1 20.4C8.5 20.8 14 20.8 14 20.8C14 20.8 19.5 20.8 20.9 20.4C21.7 20.2 22.3 19.6 22.5 18.8C22.9 17.4 22.9 14.5 22.9 14.5C22.9 14.5 22.9 11.6 22.5 10.2Z" fill="#FF0000"/>
+                    <polygon points="11.8,17.5 17.2,14.5 11.8,11.5" fill="white"/>
+                </svg>
+            </div>
+            <div class="bt"><span class="bl">YouTube</span><span class="bn">Cata Wuwa – YouTube</span></div>
+            <span class="ba">→</span>
+        </a>
+
+        <!-- TikTok -->
+        <a href="https://www.tiktok.com/@catawuwa" class="btn fu d4" target="_blank" rel="noopener">
+            <div class="bi">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="28" height="28" rx="6" fill="#010101"/>
+                    <path d="M19.5 7C19.5 7 19.8 9.5 22 10.5V13C22 13 20.1 13.1 18.5 12V18C18.5 21 15.5 23 12.5 22C9.5 21 8 17.5 9.5 15C10.7 13 13.5 12.5 15 13.5V16.5C15 16.5 13 15.8 12 17C11 18.3 11.8 20 13.5 20C15.2 20 16 18.8 16 17.5V7H19.5Z" fill="white"/>
+                    <path d="M19 6.5C19 6.5 19.3 9 21.5 10V12.5C21.5 12.5 19.6 12.6 18 11.5V17.5C18 20.5 15 22.5 12 21.5C9 20.5 7.5 17 9 14.5C10.2 12.5 13 12 14.5 13V16C14.5 16 12.5 15.3 11.5 16.5C10.5 17.8 11.3 19.5 13 19.5C14.7 19.5 15.5 18.3 15.5 17V6.5H19Z" fill="#69C9D0"/>
+                </svg>
+            </div>
+            <div class="bt"><span class="bl">TikTok</span><span class="bn">TikTok CataWuwa</span></div>
+            <span class="ba">→</span>
+        </a>
+
+        <!-- Discord -->
+        <a href="https://discord.com/invite/FUubYJNmuH" class="btn fu d5" target="_blank" rel="noopener">
+            <div class="bi">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="28" height="28" rx="6" fill="#5865F2"/>
+                    <path d="M20.3 8.4C19.1 7.8 17.8 7.4 16.5 7.2C16.3 7.6 16.1 8.1 16 8.5C14.7 8.3 13.3 8.3 12 8.5C11.9 8.1 11.7 7.6 11.5 7.2C10.2 7.4 8.9 7.8 7.7 8.4C5.3 12 4.6 15.4 5 18.8C6.4 19.8 7.8 20.5 9.2 20.9C9.6 20.3 9.9 19.7 10.2 19.1C9.6 18.9 9 18.6 8.5 18.2C8.6 18.1 8.8 18 8.9 17.9C11.9 19.3 15.1 19.3 18.1 17.9C18.2 18 18.4 18.1 18.5 18.2C18 18.6 17.4 18.9 16.8 19.1C17.1 19.7 17.4 20.3 17.8 20.9C19.2 20.5 20.6 19.8 22 18.8C22.5 14.9 21.4 11.5 20.3 8.4ZM11.5 16.8C10.6 16.8 9.9 16 9.9 15C9.9 14 10.6 13.2 11.5 13.2C12.4 13.2 13.1 14 13.1 15C13.1 16 12.4 16.8 11.5 16.8ZM16.5 16.8C15.6 16.8 14.9 16 14.9 15C14.9 14 15.6 13.2 16.5 13.2C17.4 13.2 18.1 14 18.1 15C18.1 16 17.4 16.8 16.5 16.8Z" fill="white"/>
+                </svg>
+            </div>
+            <div class="bt"><span class="bl">Discord Server</span><span class="bn">Discord Server CataWuwa</span></div>
+            <span class="ba">→</span>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/groups/2045721579652055" class="btn fu d6" target="_blank" rel="noopener">
+            <div class="bi">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="28" height="28" rx="6" fill="#1877F2"/>
+                    <path d="M16.5 3H14C12.3431 3 11 4.34315 11 6V8H9V11H11V21H14V11H16.5L17 8H14V6C14 5.44772 14.4477 5 15 5H16.5V3Z" fill="white"/>
+                </svg>
+            </div>
+            <div class="bt"><span class="bl">Facebook</span><span class="bn">Cộng Hội Cata</span></div>
+            <span class="ba">→</span>
+        </a>
+
+    </div>
+</main>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+const THEMES = [
+    { id: 'optr9r9VkoQ', start: 12, accent: '#00e5ff', gold: '#ffd54f', border: 'rgba(0,229,255,0.32)',    glow: '0,229,255',   name: 'Cartethyia' },
+    { id: 'H8gGJgMvr9w', start: 8,  accent: '#ffaa44', gold: '#ffe082', border: 'rgba(255,160,60,0.32)',   glow: '255,160,60',  name: 'Aemeath' },
+    { id: 'qUD2e2OS1zw', start: 8,  accent: '#aaddff', gold: '#fff0e8', border: 'rgba(150,210,255,0.32)',  glow: '150,210,255', name: 'Hiyuki' },
+    { id: 'Hi1z3nFl0Ls', start: 8,  accent: '#cc44ff', gold: '#ffcc44', border: 'rgba(180,60,255,0.32)',   glow: '180,60,255',  name: 'Phrolova' },
+];
+
+let player, cur = 0, ready = false, transitioning = false;
+
+// ── PARTICLES ──
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let currentGlow = THEMES[0].glow;
+
+function resizeCanvas() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function spawnParticle() {
+    return {
+        x: Math.random() * canvas.width,
+        y: canvas.height + 10,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: -(Math.random() * 1.2 + 0.4),
+        size: Math.random() * 2.5 + 0.5,
+        alpha: Math.random() * 0.5 + 0.2,
+        life: 1,
+        decay: Math.random() * 0.003 + 0.001,
+    };
+}
+
+for (let i = 0; i < 60; i++) {
+    const p = spawnParticle();
+    p.y = Math.random() * canvas.height;
+    particles.push(p);
+}
+
+function animParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= p.decay;
+        if (p.life <= 0 || p.y < -10) {
+            particles[i] = spawnParticle();
+            return;
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${currentGlow}, ${p.alpha * p.life})`;
+        ctx.fill();
+    });
+    requestAnimationFrame(animParticles);
+}
+animParticles();
+
+// ── YOUTUBE ──
+function onYouTubeIframeAPIReady() {
+    const div = document.createElement('div');
+    div.id = 'yt-player';
+    document.getElementById('yt-wrap').appendChild(div);
+    const t = THEMES[0];
+    player = new YT.Player('yt-player', {
+        videoId: t.id,
+        playerVars: {
+            autoplay: 1, mute: 1, loop: 1, playlist: t.id,
+            controls: 0, showinfo: 0, rel: 0, modestbranding: 1,
+            iv_load_policy: 3, start: t.start, playsinline: 1,
+            enablejsapi: 1, disablekb: 1, fs: 0, cc_load_policy: 0
+        },
+        events: {
+            onReady(e) {
+                ready = true;
+                e.target.setVolume(0);
+                e.target.playVideo();
+                setTimeout(() => document.getElementById('loading').classList.add('hidden'), 1200);
+            },
+            onStateChange(e) {
+                if (e.data === YT.PlayerState.ENDED) {
+                    player.seekTo(THEMES[cur].start);
+                    player.playVideo();
+                }
+            },
+            onError() { document.getElementById('loading').classList.add('hidden') }
+        }
+    });
+}
+
+// ── RADIAL CANVAS TRANSITION ──
+const radialCanvas = document.getElementById('radial-transition');
+const radialCtx = radialCanvas.getContext('2d');
+
+function resizeRadialCanvas() {
+    radialCanvas.width = window.innerWidth;
+    radialCanvas.height = window.innerHeight;
+}
+resizeRadialCanvas();
+window.addEventListener('resize', resizeRadialCanvas);
+
+
+function drawRadialTransition(x, y, radius, color, alpha = 1) {
+    radialCtx.clearRect(0, 0, radialCanvas.width, radialCanvas.height);
+
+    const gradient = radialCtx.createRadialGradient(
+        x, y, 0,
+        x, y, radius
+    );
+
+    gradient.addColorStop(0, `rgba(${color}, ${0.18 * alpha})`);
+    gradient.addColorStop(0.25, `rgba(${color}, ${0.10 * alpha})`);
+    gradient.addColorStop(0.55, `rgba(${color}, ${0.05 * alpha})`);
+    gradient.addColorStop(1, `rgba(${color}, 0)`);
+
+    radialCtx.globalCompositeOperation = 'lighter';
+    radialCtx.fillStyle = gradient;
+    radialCtx.fillRect(0, 0, radialCanvas.width, radialCanvas.height);
+}
+
+function setTheme(idx, originEl) {
+    if (idx === cur || transitioning) return;
+
+    transitioning = true;
+
+    const t = THEMES[idx];
+
+    if (originEl) {
+        const sw = document.createElement('div');
+        sw.className = 'shockwave';
+        originEl.appendChild(sw);
+        setTimeout(() => sw.remove(), 450);
+    }
+
+    let x = window.innerWidth / 2;
+    let y = window.innerHeight / 2;
+
+    if (originEl) {
+        const r = originEl.getBoundingClientRect();
+        x = r.left + r.width / 2;
+        y = r.top + r.height / 2;
+    }
+
+    const hex = t.accent.replace('#','');
+    const cr = parseInt(hex.substring(0,2), 16);
+    const cg = parseInt(hex.substring(2,4), 16);
+    const cb = parseInt(hex.substring(4,6), 16);
+
+    // đổi theme NGAY LẬP TỨC
+    cur = idx;
+    currentGlow = t.glow;
+
+    document.documentElement.style.setProperty('--a',  t.accent);
+    document.documentElement.style.setProperty('--g',  t.gold);
+    document.documentElement.style.setProperty('--bg', t.border);
+
+    document.querySelectorAll('.sw-btn').forEach((el, i) =>
+        el.classList.toggle('on', i === idx));
+
+    if (ready) {
+        player.loadVideoById({
+            videoId: t.id,
+            startSeconds: t.start
+        });
+        player.setVolume(0);
+    }
+
+    radialCanvas.style.opacity = '1';
+
+    let start = null;
+    const duration = 650;
+
+    function animate(ts) {
+        if (!start) start = ts;
+
+        const progress = Math.min((ts - start) / duration, 1);
+
+        // smoother easing
+        const eased = 1 - Math.pow(1 - progress, 4);
+
+        const radius = eased * Math.hypot(window.innerWidth, window.innerHeight);
+
+        drawRadialTransition(
+            x,
+            y,
+            radius,
+            `${cr},${cg},${cb}`,
+            1 - (progress * 0.85)
+        );
+
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        } else {
+            radialCtx.clearRect(0, 0, radialCanvas.width, radialCanvas.height);
+            radialCanvas.style.opacity = '0';
+            transitioning = false;
+        }
+    }
+
+    requestAnimationFrame(animate);
+}
+
+// ── RIPPLE ──
+
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        const r  = this.getBoundingClientRect();
+        const s  = Math.max(r.width, r.height) * 1.5;
+        const rp = document.createElement('span');
+        rp.className  = 'ripple';
+        rp.style.cssText =
+            `width:${s}px;height:${s}px;` +
+            `left:${e.clientX - r.left - s/2}px;` +
+            `top:${e.clientY  - r.top  - s/2}px`;
+        this.appendChild(rp);
+        setTimeout(() => rp.remove(), 700);
+    });
+});
+</script>
+</body>
+</html>

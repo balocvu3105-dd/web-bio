@@ -1,4 +1,3 @@
-
 const THEMES = [
     { id: 'optr9r9VkoQ', start: 12, accent: '#00e5ff', gold: '#ffd54f', border: 'rgba(0,229,255,0.32)',    glow: '0,229,255',   name: 'Cartethyia' },
     { id: 'H8gGJgMvr9w', start: 8,  accent: '#ffaa44', gold: '#ffe082', border: 'rgba(255,160,60,0.32)',   glow: '255,160,60',  name: 'Aemeath' },
@@ -198,10 +197,16 @@ function toggleCredit() {
     const el = document.getElementById('creditWm');
     el.classList.toggle('open');
 }
-// Close when clicking outside
+// Close when clicking outside (backdrop handles it, but fallback)
 document.addEventListener('click', function(e) {
     const el = document.getElementById('creditWm');
-    if (el && !el.contains(e.target)) el.classList.remove('open');
+    if (!el) return;
+    const badge = el.querySelector('.credit-wm-badge');
+    const card  = el.querySelector('.credit-wm-card');
+    // only close if click is outside both badge and card
+    if (!badge.contains(e.target) && !card.contains(e.target)) {
+        el.classList.remove('open');
+    }
 });
 
 // ── SHOP MODAL ──
