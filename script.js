@@ -201,3 +201,13 @@ document.querySelectorAll('.btn').forEach(btn => {
         this.appendChild(rp); setTimeout(()=>rp.remove(),700);
     });
 });
+// anti stuck loading
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        const loading = document.getElementById("loading");
+
+        if (loading && !loading.classList.contains("hidden")) {
+            loading.classList.add("hidden");
+        }
+    }, 3000);
+});
