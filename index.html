@@ -7,16 +7,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <div id="loading"><span class="lt">WUTHERING WAVES</span></div>
 <div id="yt-wrap"></div>
 <div id="vg"></div>
+
 <div id="iris-overlay"></div>
 <div id="iris-ring"></div>
 <canvas id="particles"></canvas>
+
 
 <!-- SETTINGS GEAR -->
 <div class="gear-wrap" id="gearWrap">
@@ -34,28 +36,47 @@
 
 <!-- CREDIT WATERMARK -->
 <div class="credit-wm" id="creditWm" onclick="toggleCredit()">
-    <span class="credit-trigger">Created by DynamiteV</span>
-    <div class="credit-popup">
-        <div class="credit-title">Created by</div>
-        <div class="credit-card">
-            <img src="assets/icons/avatar-dynamite.jpg" alt="DynamiteV" class="credit-av">
-            <div class="credit-info">
-                <span class="credit-name">DynamiteV</span>
-                <span class="credit-alias">Bá Lộc Vũ</span>
+    <div class="credit-wm-backdrop"></div>
+    <div class="credit-wm-badge">
+        <div class="credit-wm-dot"></div>
+        <span class="credit-wm-label">Created by DynamiteV</span>
+    </div>
+    <div class="credit-wm-card" onclick="event.stopPropagation()">
+        <div class="cwm-head">
+            <img src="assets/icons/avatar-dynamite.jpg" alt="DynamiteV" class="cwm-avatar" onerror="this.src='assets/icons/cartethyia-avatar.jpg'">
+            <div class="cwm-txt">
+                <span class="cwm-nick">DynamiteV</span>
+                <span class="cwm-real">Bá Lộc Vũ</span>
             </div>
         </div>
-        <div class="credit-links">
-            <a href="https://www.facebook.com/vunguyenbaloc/?locale=vi_VN" target="_blank" class="credit-link">
-                <svg viewBox="0 0 24 24" fill="#1877f2" width="14" height="14"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                Facebook
+        <div class="cwm-div"></div>
+        <div class="cwm-links">
+            <a href="https://www.facebook.com/vunguyenbaloc/?locale=vi_VN" target="_blank" class="cwm-row">
+                <div class="cwm-ico">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </div>
+                <div class="cwm-txt">
+                    <span class="cwm-platform">Facebook</span>
+                    <span class="cwm-value">Bá Lộc Vũ</span>
+                </div>
             </a>
-            <a href="https://github.com/balocvu3105-dd" target="_blank" class="credit-link">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                GitHub
+            <a href="https://github.com/balocvu3105-dd" target="_blank" class="cwm-row">
+                <div class="cwm-ico">
+                    <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                </div>
+                <div class="cwm-txt">
+                    <span class="cwm-platform">GitHub</span>
+                    <span class="cwm-value">balocvu3105-dd</span>
+                </div>
             </a>
-            <a href="mailto:balocvu3105@gmail.com" class="credit-link" onclick="copyEmail('balocvu3105@gmail.com', event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                balocvu3105@gmail.com
+            <a href="mailto:balocvu3105@gmail.com" class="cwm-row" onclick="copyEmail('balocvu3105@gmail.com', event)">
+                <div class="cwm-ico">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div class="cwm-txt">
+                    <span class="cwm-platform">Email</span>
+                    <span class="cwm-value">balocvu3105@gmail.com</span>
+                </div>
             </a>
         </div>
     </div>
@@ -83,14 +104,14 @@
         <div class="group-cards">
 
             <!-- YOUTUBE -->
-            <a href="https://www.youtube.com/@Catawuwa" target="_blank" class="btn btn-yt">
+            <button class="btn btn-yt" onclick="openYoutubeModal()">
                 <div class="bi bi-yt"><img src="assets/icons/logo-youtube.webp" alt="YouTube"></div>
                 <div class="bt">
                     <span class="bn">YouTube</span>
-                    <span class="bs">Video dài &amp; hướng dẫn</span>
+                    <span class="bs">Danh sách kênh chính thức</span>
                 </div>
                 <span class="ba">→</span>
-            </a>
+            </button>
 
             <!-- TIKTOK -->
             <a href="https://www.tiktok.com/@catawuwa" target="_blank" class="btn">
@@ -134,13 +155,13 @@
         <div class="group-label">💛 Ủng hộ</div>
         <div class="group-cards">
 
-            <!-- LDSHOP -->
+            <!-- SHOP / CỬA HÀNG -->
             <button class="btn btn-shop" onclick="openShopModal()">
                 <div class="bi bi-shop">
-                    <img src="assets/icons/logo-ldshop.png" alt="Shop">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                 </div>
                 <div class="bt">
-                    <span class="bn">LDShop</span>
+                    <span class="bn">Cửa hàng</span>
                     <span class="bs">Nạp game ủng hộ</span>
                 </div>
                 <span class="ba">→</span>
@@ -205,6 +226,7 @@
 </div>
 
 <!-- ══ SHOP MODAL ══ -->
+
 <div id="shop-modal">
     <div class="modal-backdrop" onclick="closeShopModal()"></div>
     <div class="modal-box">
@@ -214,14 +236,46 @@
         </div>
         <div class="modal-notice">
             <ul>
-                <li><span class="dot"></span><span>Hãy <strong>đăng nhập LDShop</strong> trước khi nạp</span></li>
+                <li><span class="dot"></span><span>Hãy <strong>đăng nhập tài khoản</strong> trước khi nạp</span></li>
                 <li><span class="dot"></span><span>Sau đó mới bấm nút <strong>"Nạp ngay"</strong></span></li>
                 <li><span class="dot"></span><span><strong>Không dùng</strong> tab ẩn danh</span></li>
                 <li><span class="dot"></span><span><strong>Không đóng</strong> trình duyệt khi thanh toán</span></li>
             </ul>
         </div>
         <p class="modal-warn">Nếu đăng nhập sau khi bấm link, hệ thống có thể không ghi nhận hỗ trợ.</p>
-        <div class="modal-divider">Chọn game để nạp</div>
+        
+        <div class="modal-divider">Chọn hệ thống cửa hàng</div>
+        <div class="modal-games">
+            <a href="https://www.lootbar.com/shop/CataWuwa" target="_blank" class="game-btn" style="border-color: rgba(0, 229, 255, 0.4); background: rgba(0, 229, 255, 0.08);">
+                <div class="game-ico"><img src="assets/icons/lootbar.png" alt="LootBar" style="width:32px;height:32px;border-radius:6px;object-fit:cover"></div>
+                <span class="game-name" style="font-weight: 700; color: #fff;">
+                    <span style="display:block;font-size:14px;color:#fff">LootBar Shop</span>
+                    <span style="font-size:11px;color:rgba(255,255,255,0.6);font-weight:400">Nạp trực tiếp qua LootBar</span>
+                </span>
+                <span class="game-arr" style="color: #00e5ff;">→</span>
+            </a>
+            <button class="game-btn" onclick="closeShopModal(); openLdshopModal();" style="border-color: rgba(255, 213, 79, 0.4); background: rgba(255, 213, 79, 0.08); width: 100%; text-align: left;">
+                <div class="game-ico"><img src="assets/icons/logo-ldshop.png" alt="LDShop" style="width:32px;height:32px;border-radius:6px;object-fit:cover"></div>
+                <span class="game-name" style="font-weight: 700; color: #fff;">
+                    <span style="display:block;font-size:14px;color:#fff">LDShop</span>
+                    <span style="font-size:11px;color:rgba(255,255,255,0.6);font-weight:400">Hỗ trợ nạp nhiều game</span>
+                </span>
+                <span class="game-arr" style="color: #ffd54f;">→</span>
+            </button>
+        </div>
+        <button class="modal-close" onclick="closeShopModal()">Đóng</button>
+    </div>
+</div>
+
+<!-- ══ LDSHOP MODAL ══ -->
+<div id="ldshop-modal">
+    <div class="modal-backdrop" onclick="closeLdshopModal()"></div>
+    <div class="modal-box">
+        <div class="modal-header">
+            <div class="modal-icon" style="background:rgba(255,213,79,.15);border-color:rgba(255,213,79,.4);color:#ffd54f"><img src="assets/icons/logo-ldshop.png" alt="LDShop" style="width:24px;height:24px;object-fit:contain"></div>
+            <span class="modal-title" style="font-size:11px;letter-spacing:1.5px">LDSHOP — CHỌN GAME NẠP</span>
+        </div>
+        <div class="modal-divider">Danh sách game hỗ trợ</div>
         <div class="modal-games">
             <a href="https://chain.ldshop.gg/T4Vmvxwnk/wuthering-waves-gp?aff_short=CataWuwa" target="_blank" class="game-btn">
                 <div class="game-ico"><img src="assets/icons/logowuwa.jpg" alt="WuWa" style="width:32px;height:32px;border-radius:6px;object-fit:cover"></div>
@@ -244,7 +298,10 @@
                 <span class="game-arr">→</span>
             </a>
         </div>
-        <button class="modal-close" onclick="closeShopModal()">Đóng</button>
+        <div style="display:flex;gap:10px;margin-top:10px">
+            <button class="modal-close" onclick="closeLdshopModal(); openShopModal();" style="flex:1;border-color:rgba(0,229,255,.3);color:var(--a)">← Quay lại</button>
+            <button class="modal-close" onclick="closeLdshopModal()" style="flex:1">Đóng</button>
+        </div>
     </div>
 </div>
 
@@ -313,8 +370,44 @@
     </div>
 </div>
 
-<script src="https://www.youtube.com/iframe_api"></script>
-<script src="script.js"></script>
+<!-- ══ YOUTUBE MODAL ══ -->
+<div id="youtube-modal">
+    <div class="modal-backdrop" onclick="closeYoutubeModal()"></div>
+    <div class="modal-box">
+        <div class="modal-header">
+            <div class="modal-icon" style="background:rgba(255,0,0,.15);border-color:rgba(255,0,0,.4);font-size:20px">🎬</div>
+            <span class="modal-title" style="font-size:11px;letter-spacing:1.5px">HỆ THỐNG KÊNH YOUTUBE CHÍNH THỨC</span>
+        </div>
+        <div class="modal-notice" style="background:rgba(255,0,0,.06);border-color:rgba(255,0,0,.18)">
+            <ul>
+                <li><span class="dot" style="background:#ff3333;box-shadow:0 0 6px #ff3333"></span><span style="color:#fff"><strong>CataWuwa:</strong> Kênh phát trực tiếp (Livestream) &amp; trò chuyện chính thức.</span></li>
+                <li><span class="dot" style="background:#ff3333;box-shadow:0 0 6px #ff3333"></span><span style="color:#fff"><strong>Tấn - CataWuwa:</strong> Kênh chia sẻ cốt truyện, hướng dẫn &amp; video dài.</span></li>
+            </ul>
+        </div>
+        <div class="modal-divider">Chọn kênh YouTube</div>
+        <div class="modal-games">
+            <a href="https://www.youtube.com/@CataWuwa" target="_blank" class="game-btn" style="border-color: rgba(255,50,50,0.35); background: rgba(255,50,50,0.06);">
+                <div class="game-ico" style="background: rgba(255,0,0,0.2); border: 1px solid rgba(255,0,0,0.4);"><img src="assets/icons/logo-youtube.webp" alt="CataWuwa" style="width:22px;height:22px;object-fit:contain"></div>
+                <span class="game-name" style="font-weight: 700; color: #fff;">
+                    <span style="display:block;font-size:14px;color:#fff">CataWuwa</span>
+                    <span style="font-size:11px;color:rgba(255,255,255,0.6);font-weight:400">@CataWuwa — Kênh Live Chính</span>
+                </span>
+                <span class="game-arr" style="color: #ff4444;">→</span>
+            </a>
+            <a href="https://www.youtube.com/@TanCataww" target="_blank" class="game-btn" style="border-color: rgba(255,50,50,0.35); background: rgba(255,50,50,0.06);">
+                <div class="game-ico" style="background: rgba(255,0,0,0.2); border: 1px solid rgba(255,0,0,0.4);"><img src="assets/icons/logo-youtube.webp" alt="TanCataww" style="width:22px;height:22px;object-fit:contain"></div>
+                <span class="game-name" style="font-weight: 700; color: #fff;">
+                    <span style="display:block;font-size:14px;color:#fff">Tấn - CataWuwa</span>
+                    <span style="font-size:11px;color:rgba(255,255,255,0.6);font-weight:400">@TanCataww — Cốt Truyện &amp; Hướng Dẫn</span>
+                </span>
+                <span class="game-arr" style="color: #ff4444;">→</span>
+            </a>
+        </div>
+        <button class="modal-close" onclick="closeYoutubeModal()" style="margin-top:10px">Đóng</button>
+    </div>
+</div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="js/script.js"></script>
 </body>
 </html>
